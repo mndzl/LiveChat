@@ -1,0 +1,33 @@
+#chat-container{
+    overflow-x: hidden;
+    height: 100vh;
+}
+#chat-name{
+    position: fixed;
+    width:100%;
+    min-height: 3em;
+    background-color:#1e202c;
+    display: flex;
+    align-items: center;
+    font-size: 1.2em;
+    padding-left: 1em;
+}
+#chat-name span{
+    color:white;
+}
+
+#chat{
+    overflow-x: scroll;
+    background-color: black;
+    padding:4em 1em;
+    height: 100vh;
+    background-image: url("../media/background.jpeg");
+}
+
+.fa-spinner{
+    font-size: 3em;
+    color:white;
+    position: absolute;
+    top:50%;
+    left: 45%;
+}

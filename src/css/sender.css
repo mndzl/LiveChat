@@ -1,0 +1,27 @@
+#sender{
+    display: flex;
+    position: fixed;
+    width: 100%;
+    justify-content: space-between;
+    background-image: url("../media/background.jpeg");
+    padding:.6em;
+    height: 4em;
+    bottom: 0;
+    z-index: 3;
+}
+#sender input{
+    padding:1em;
+    border-radius: 20px;
+    border:none;
+    outline:none;
+    width: 85%;
+}
+#sender button{
+    border:none;
+    background-color: #25D366;
+    border-radius: 50%;
+}
+#sender button i{
+    width: 2.5em;
+    color:white;
+}

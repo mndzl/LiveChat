@@ -1,0 +1,22 @@
+.message-container{
+    margin-bottom: .2em;
+    display: flex;
+}
+.message-data{
+    padding:.5em;
+    background-color: #1e202c;
+    border-radius: 10px;
+    display: inline-block;
+    color:white;
+    max-width: 80vw;
+}
+.message-author{
+    font-size: .8em;
+    color:green;
+}
+.sent{
+    justify-content: right;
+}
+.sent .message-data{
+    background-color: #075E54;
+}
