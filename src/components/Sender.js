@@ -1,15 +1,15 @@
-import { getAuth } from 'firebase/auth';
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import { useContext } from 'react';
-import { app, db } from '../firebase.js';
+import { db } from '../firebase.js';
 import { UserContext } from './UserContext.js';
 import "../css/sender.css";
 
-export default function Sender({endMessages}){
+export default function Sender({bodyRef}){
     const { user } = useContext(UserContext);
 
-    const send = () => {
-        const text = document.getElementById('message-input').value;
+    const send = (e) => {
+        e.preventDefault();
+        const text = e.target.text.value;
 
         const messagesRef = collection(db, "messages");
 
@@ -24,22 +24,18 @@ export default function Sender({endMessages}){
             })
                 .then(() => {
                     console.log("message sent succesfully by", user.uid);
-                    endMessages.current.scrollIntoView()
+                    //bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
                     console.log("sent message, scrolling");
                 });
         }
 
-        document.getElementById('message-input').value = "";
-    }
-
-    const focus = () => {
-        
+        e.target.text.value = "";
     }
 
     return (
-        <div id="sender">
-            <input type="text" id="message-input" placeholder="Message" onClick={focus}/>
-            <button onClick={send}><i className="fa fa-paper-plane"></i></button>
-        </div>
+        <form id="sender" onSubmit={(e)=>send(e)}>
+            <input type="text" name="text" placeholder="Message"/>
+            <button><i className="fa fa-paper-plane"></i></button>
+        </form>
     )
 }

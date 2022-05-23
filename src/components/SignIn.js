@@ -17,7 +17,7 @@ export default function SignIn(){
     const auth = getAuth(app);
 
     const signInWithGoogle = () => {
-        setUser({name:"debug", uid:"asdasd"});
+        // setUser({name:"debug", uid:"asdasd"});
         signInWithPopup(auth, new GoogleAuthProvider())
             .then((snapshot) => {
                 setUser(snapshot.user);
