@@ -1,0 +1,53 @@
+#groupinfo{
+    position:absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: #1e202c;
+    z-index: 5;
+    color:white;
+    right:-100vw;
+    transition: right .2s;
+}
+.show{
+    right:0 !important;
+    transition:right .2s;
+}
+.groupinfo-title{
+    background-color: #2a2d3d;
+    padding:1em;
+    display: flex;
+    align-items: center;
+    gap:1em;
+}   
+.groupinfo-title-text{
+    font-size:1.2em;
+    font-weight: 800;
+}
+.close-groupinfo{
+    font-size: 1.2em;
+    cursor:pointer;
+}
+.userlist-item{
+    list-style: none;
+}
+.userlist{
+    padding:2em;
+    display: flex;
+    flex-direction: column;
+    gap:2em;
+}
+.userlist-item-email{
+    opacity: .7;
+}
+.show{
+    right:200px;
+}
+.clearchat-container{
+    display: flex;
+    justify-content: center;
+    margin:auto;
+}
+.clearchat-container .clear{
+    width:90%;
+    padding:1em 0;
+}

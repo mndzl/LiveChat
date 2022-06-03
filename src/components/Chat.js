@@ -1,89 +1,70 @@
 import { useContext, useEffect, useState, useRef } from 'react';
 import { db } from '../firebase.js';
-import { getDocs, collection, orderBy, query, onSnapshot, limit } from 'firebase/firestore';
+import { collection, orderBy, query, onSnapshot, limit } from 'firebase/firestore';
 import { UserContext } from './UserContext';
 import Sender from './Sender';
 import Message from './Message';
 import '../css/chat.css';
+import UserList from './UserList.js';
 
 export default function Chat(){
     const [ messages, setMessages ] = useState([]);
     const [ initialScroll, setInitialScroll ] = useState(false);
+    const [ openGroupList, setOpenGroupList ] = useState(false);
+    const [loading, setLoading] = useState(false);
     const chatBody = useRef(null);
-
-    const { user } = useContext(UserContext);
 
     const endMessages = useRef();
 
     useEffect(() => {
         if(!initialScroll){
             setTimeout(() => {
-                 endMessages.current.scrollIntoView();
+                endMessages.current.scrollIntoView();
                 setInitialScroll(true);
             },2000);
         }
     }, [])
 
-    // const q = query(collection(db, "messages").orderBy("createdAt"));
-    // onSnapshot(q, (snapshot) => {
-    //     const newMessages = snapshot.docs.map(doc => ({...doc.data(), id:doc.id}));
-    //     setMessages( newMessages );
-        
-    //     if(JSON.stringify(newMessages)!=JSON.stringify(messages)){
-    //         console.log(newMessages[newMessages.length-1].text);
-    //         scroll(JSON.stringify(newMessages)!=JSON.stringify(messages));
-    //     }
-    // });
-    
-
-    const messagesRef = query(collection(db, "messages"), orderBy("createdAt"), limit(50));
+    const messagesRef = query(collection(db, "messages"), orderBy("createdAt"), limit(25));
     onSnapshot(messagesRef, (snapshot) => {
+        setLoading(true);
         let msgs  = [];
         snapshot.docs.map(doc => {
             msgs.push({...doc.data()});
         })
         chatBody.current.scrollTop = chatBody.current.scrollHeight;
         setMessages(msgs);
+        setLoading(false);
     });
-
-    // getDocs(query(collection(db, "messages"),orderBy("createdAt")))
-    //     .then((snapshot) => {
-    //         let messages = [];
-    //         snapshot.docs.forEach((doc) => {
-    //             messages.push({...doc.data(), id:doc.id});
-    //             setPrevMessageId(doc.id);
-    //         })
-    //         if(prevMessageId != messages[messages.length-1].id){
-    //             chatBody.current.scrollTop = chatBody.current.scrollHeight;
-    //         }
-    //         setMessages(messages);
-    //     });
-
-    // const scroll = (willScroll) => {
-    //     if (willScroll){
-    //         chatBody.current.scrollTop = chatBody.current.scrollHeight;
-    //     }
-    // }
-
 
     return (
         <div id="chat-container">
+            
+            {/* Group Info, Absolute */}
+            <UserList openGroupList={openGroupList} setOpenGroupList={setOpenGroupList}/>
+            {/* Group Info, Absolute */}
+
+
             <div id="chat-name">
                 <span>Global Chat</span>
+                <i className="fa fa-info-circle" onClick={() => setOpenGroupList(true)}></i>
             </div>
             <div id="chat" ref={chatBody}>
                 <div id="messages-box">
-                    { messages.length == 0 ? 
+                    { loading ? 
                         <i className="fa fa-spinner fa-spin"></i>
                         :
-                        messages.map(msg => 
-                            <Message msg={msg.text} author={msg.author} key={msg.id}/>                          
-                        )
+                            messages.length == 0 ?
+                                <span className="noMessages">No messages</span>
+                            :
+                            messages.map(msg => 
+                                <Message msg={msg.text} author={msg.author} key={msg.id}/>                          
+                            )
                     }
                 </div>
                 <div ref={endMessages}></div>
             </div>
-            <Sender bodyRef={chatBody}/>
+            <Sender/>
         </div>
     )
 }

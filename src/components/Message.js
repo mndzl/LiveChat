@@ -8,7 +8,7 @@ export default function Message({msg, author, id}){
     const sentOrReceived = (author) => {
 
         let classes = "message-container ";
-        if(author.id == user.uid){
+        if(author.uid == user.uid){
             classes += "sent";
         }
 
@@ -18,7 +18,7 @@ export default function Message({msg, author, id}){
     return (
         <div className={sentOrReceived(author, id)}>
             <div className="message-data">
-                {author.id != user.uid && <div className="message-author">{author.name}</div>}
+                {author.uid != user.uid && <div className="message-author">{author.name}</div>}
                 <div className="message">{msg} </div>
             </div>
         </div>

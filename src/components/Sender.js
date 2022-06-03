@@ -4,7 +4,7 @@ import { db } from '../firebase.js';
 import { UserContext } from './UserContext.js';
 import "../css/sender.css";
 
-export default function Sender({bodyRef}){
+export default function Sender(){
     const { user } = useContext(UserContext);
 
     const send = (e) => {
@@ -17,14 +17,13 @@ export default function Sender({bodyRef}){
             addDoc(messagesRef, {
                 text:text,
                 author: {
-                    id:user.uid,
+                    uid:user.uid,
                     name:user.displayName,
                 },
                 createdAt: Timestamp.fromDate(new Date()),
             })
                 .then(() => {
                     console.log("message sent succesfully by", user.uid);
-                    //bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
                     console.log("sent message, scrolling");
                 });
         }
@@ -33,7 +32,7 @@ export default function Sender({bodyRef}){
     }
 
     return (
-        <form id="sender" onSubmit={(e)=>send(e)}>
+        <form id="sender" autoComplete='off' onSubmit={(e)=>send(e)}>
             <input type="text" name="text" placeholder="Message"/>
             <button><i className="fa fa-paper-plane"></i></button>
         </form>

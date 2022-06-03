@@ -1,6 +1,7 @@
 #chat-container{
-    overflow-x: hidden;
+    overflow: hidden;
     height: 100vh;
+    position: relative;
 }
 #chat-name{
     position: fixed;
@@ -10,7 +11,8 @@
     display: flex;
     align-items: center;
     font-size: 1.2em;
-    padding-left: 1em;
+    justify-content: space-between;
+    padding: 0 1em;
 }
 #chat-name span{
     color:white;
@@ -30,4 +32,14 @@
     position: absolute;
     top:50%;
     left: 45%;
+}
+.fa-info-circle{
+    color:white;
+    cursor:pointer;
+}
+.noMessages{
+    display: flex;
+    justify-content: center;
+    color:white;
+    font-size:1.5em;
 }
